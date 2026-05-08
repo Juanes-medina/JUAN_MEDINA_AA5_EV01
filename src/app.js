@@ -6,7 +6,13 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use(express.static('public'));
 
 app.use('/api', authRoutes);
 
 module.exports = app;
+app.get('/', (req, res) => {
+    res.json({
+        mensaje: 'API funcionando'
+    });
+});

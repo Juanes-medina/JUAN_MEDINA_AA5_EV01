@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login API</title>
+
+    <style>
+
+        body{
+            font-family: Arial;
+            background: #f2f2f2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .login{
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            width: 300px;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+        }
+
+        input{
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+        }
+
+        button{
+            width: 100%;
+            padding: 10px;
+            margin-top: 15px;
+            background: black;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        #mensaje{
+            margin-top: 15px;
+            color: red;
+        }
+
+    </style>
+
+</head>
+<body>
+
+    <div class="login">
+
+        <h2>Iniciar Sesión</h2>
+
+        <input type="text" id="usuario" placeholder="Usuario">
+
+        <input type="password" id="password" placeholder="Contraseña">
+
+        <button onclick="login()">Ingresar</button>
+
+        <p id="mensaje"></p>
+
+    </div>
+
+    <script>
+
+        async function login(){
+
+            const usuario = document.getElementById('usuario').value;
+            const password = document.getElementById('password').value;
+
+            const respuesta = await fetch('http://localhost:3000/api/login',{
+
+                method:'POST',
+
+                headers:{
+                    'Content-Type':'application/json'
+                },
+
+                body: JSON.stringify({
+                    usuario,
+                    password
+                })
+
+            });
+
+            const datos = await respuesta.json();
+
+            document.getElementById('mensaje').innerText =
+                datos.mensaje || datos.error;
+
+        }
+
+    </script>
+
+</body>
+</html>
